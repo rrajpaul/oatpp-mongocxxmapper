@@ -171,28 +171,28 @@ MongoToDto::AbstractObjectWrapper MongoToDto::readValue(const Type* const type,
                                                   const bsoncxx::types::value& caret,
                                                   const std::shared_ptr<Config>& config){
   
-  auto typeName = type->name;
-  if(typeName == oatpp::data::mapping::type::__class::String::CLASS_NAME){
+  auto typeName = type->classId.name;
+  if(typeName == oatpp::data::mapping::type::__class::String::CLASS_ID.name){
     return readStringValue(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Int8::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Int8::CLASS_ID.name){
     return readInt8Value(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Int16::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Int16::CLASS_ID.name){
     return readInt16Value(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Int32::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Int32::CLASS_ID.name){
     return readInt32Value(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Int64::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Int64::CLASS_ID.name){
     return readInt64Value(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Float32::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Float32::CLASS_ID.name){
     return readFloat32Value(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Float64::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Float64::CLASS_ID.name){
     return readFloat64Value(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::Boolean::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::Boolean::CLASS_ID.name){
     return readBooleanValue(caret);
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name){
     return readObjectValue(type, caret, config);
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_ID.name){
     return readListValue(type, caret, config);
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME){
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name){
     return readListMapValue(type, caret, config);
   }
   
@@ -268,7 +268,7 @@ MongoToDto::AbstractObjectWrapper MongoToDto::readListMap(const MongoToDto::Type
 
   auto it = type->params.begin();
   Type* keyType = *it ++;
-  if(keyType->name != oatpp::data::mapping::type::__class::String::CLASS_NAME){
+  if(keyType->classId.name != oatpp::data::mapping::type::__class::String::CLASS_ID.name){
     throw std::runtime_error("[oatpp::parser::json::mapping::MongoToDto::readListMap()]: Invalid json map key. Key should be String");
   }
   Type* valueType = *it;

@@ -40,9 +40,9 @@ void DtoToMongo::writeValue(bsoncxx::builder::stream::document::key_context* str
   }
 
 
-  const char* typeName = polymorph.valueType->name;
+  const char* typeName = polymorph.valueType->classId.name;
   
-  if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME) {
+  if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name) {
     const AbstractFieldsMap::ObjectWrapper& map = oatpp::data::mapping::type::static_wrapper_cast<AbstractFieldsMap>(polymorph);
     auto curr = map->getFirstEntry();
     while(curr != nullptr){
@@ -53,7 +53,7 @@ void DtoToMongo::writeValue(bsoncxx::builder::stream::document::key_context* str
       }
       curr = curr->getNext();
     }
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name) {
     const PolymorphicWrapper<Object>& polymorphmoprh =  oatpp::data::mapping::type::static_wrapper_cast<Object>(polymorph);
     auto fields = polymorph.valueType->properties->getList();
     Object* object = polymorphmoprh.get();
@@ -78,9 +78,9 @@ void DtoToMongo::writeObjValue(bsoncxx::builder::stream::document::key_context* 
     return;
   }
 
-  const char* typeName = polymorph.valueType->name;
+  const char* typeName = polymorph.valueType->classId.name;
 
-  if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME) {
+  if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name) {
 
     const AbstractFieldsMap::ObjectWrapper& map = oatpp::data::mapping::type::static_wrapper_cast<AbstractFieldsMap>(polymorph);
     auto curr = map->getFirstEntry();
@@ -95,7 +95,7 @@ void DtoToMongo::writeObjValue(bsoncxx::builder::stream::document::key_context* 
       curr = curr->getNext();
     }
 
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name) {
 
     const PolymorphicWrapper<Object>& polymorphmoprh =  oatpp::data::mapping::type::static_wrapper_cast<Object>(polymorph);
     auto fields = polymorph.valueType->properties->getList();
@@ -121,9 +121,9 @@ void DtoToMongo::writeArrValue(bsoncxx::builder::stream::array::array_context* s
     return;
   }
 
-  const char* typeName = polymorph.valueType->name;
+  const char* typeName = polymorph.valueType->classId.name;
 
-  if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_NAME) {
+  if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_ID.name) {
 
     const PolymorphicWrapper<AbstractList>& polymorphmoprh =  oatpp::data::mapping::type::static_wrapper_cast<AbstractList>(polymorph);
     auto curr = polymorphmoprh->getFirstNode();
@@ -158,42 +158,42 @@ void DtoToMongo::writeSimpleKV(bsoncxx::builder::stream::document::key_context *
     }
   }
 
-  const char* typeName = polymorph.valueType->name;
+  const char* typeName = polymorph.valueType->classId.name;
 
 
   // POD
-  if(typeName == oatpp::data::mapping::type::__class::String::CLASS_NAME) {
+  if(typeName == oatpp::data::mapping::type::__class::String::CLASS_ID.name) {
     auto str = oatpp::data::mapping::type::static_wrapper_cast<oatpp::base::StrBuffer>(polymorph);
     /**stream = */*stream << key << std::string((const char*)str->getData(), str->getSize());
-  } else if(typeName == oatpp::data::mapping::type::__class::Int8::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int8::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_int32{oatpp::data::mapping::type::static_wrapper_cast<Int8::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Int16::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int16::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_int32{oatpp::data::mapping::type::static_wrapper_cast<Int16::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Int32::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int32::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_int32{oatpp::data::mapping::type::static_wrapper_cast<Int32::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Int64::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int64::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_int64{oatpp::data::mapping::type::static_wrapper_cast<Int64::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Float32::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Float32::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_double{oatpp::data::mapping::type::static_wrapper_cast<Float32::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Float64::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Float64::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_double{oatpp::data::mapping::type::static_wrapper_cast<Float64::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Boolean::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Boolean::CLASS_ID.name) {
     /**stream = */*stream << key << bsoncxx::types::b_bool{oatpp::data::mapping::type::static_wrapper_cast<Boolean::ObjectType>(polymorph)->getValue()};
   }
 
-  else if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME) {
+  else if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name) {
 
     bsoncxx::builder::stream::document doc;
     writeObjValue(&doc, polymorph, config);
     /**stream = */*stream << key << doc;
 
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name) {
 
     bsoncxx::builder::stream::document doc;
     writeObjValue(&doc, polymorph, config);
     /**stream = */*stream << key << doc;
 
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_ID.name) {
 
     bsoncxx::builder::stream::array arr;
     writeArrValue(&arr, polymorph, config);
@@ -211,7 +211,7 @@ void DtoToMongo::writeSimpleV(bsoncxx::builder::stream::array::array_context *st
                               const DtoToMongo::AbstractObjectWrapper &polymorph,
                               const std::shared_ptr<DtoToMongo::Config> &config) {
 
-  const char* typeName = polymorph.valueType->name;
+  const char* typeName = polymorph.valueType->classId.name;
 
   if(!polymorph) {
     if(config->includeNullFields) {
@@ -222,38 +222,38 @@ void DtoToMongo::writeSimpleV(bsoncxx::builder::stream::array::array_context *st
   }
 
   // POD
-  if(typeName == oatpp::data::mapping::type::__class::String::CLASS_NAME) {
+  if(typeName == oatpp::data::mapping::type::__class::String::CLASS_ID.name) {
     auto str = oatpp::data::mapping::type::static_wrapper_cast<oatpp::base::StrBuffer>(polymorph);
     /**stream = */*stream << std::string((const char*)str->getData(), str->getSize());
-  } else if(typeName == oatpp::data::mapping::type::__class::Int8::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int8::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_int32{oatpp::data::mapping::type::static_wrapper_cast<Int8::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Int16::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int16::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_int32{oatpp::data::mapping::type::static_wrapper_cast<Int16::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Int32::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int32::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_int32{oatpp::data::mapping::type::static_wrapper_cast<Int32::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Int64::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Int64::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_int64{oatpp::data::mapping::type::static_wrapper_cast<Int64::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Float32::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Float32::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_double{oatpp::data::mapping::type::static_wrapper_cast<Float32::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Float64::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Float64::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_double{oatpp::data::mapping::type::static_wrapper_cast<Float64::ObjectType>(polymorph)->getValue()};
-  } else if(typeName == oatpp::data::mapping::type::__class::Boolean::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::Boolean::CLASS_ID.name) {
     /**stream = */*stream << bsoncxx::types::b_bool{oatpp::data::mapping::type::static_wrapper_cast<Boolean::ObjectType>(polymorph)->getValue()};
   }
 
-  else if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME) {
+  else if(typeName == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name) {
 
     bsoncxx::builder::stream::document doc;
     writeObjValue(&doc, polymorph, config);
     /**stream = */*stream << doc;
 
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name) {
 
     bsoncxx::builder::stream::document doc;
     writeObjValue(&doc, polymorph, config);
     /**stream = */*stream << doc;
 
-  } else if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_NAME) {
+  } else if(typeName == oatpp::data::mapping::type::__class::AbstractList::CLASS_ID.name) {
 
     bsoncxx::builder::stream::array arr;
     writeArrValue(&arr, polymorph, config);

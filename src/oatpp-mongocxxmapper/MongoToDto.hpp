@@ -190,9 +190,9 @@ public:
                                            const std::shared_ptr<Config>& config,
                                            const Type* const type) {
 
-    if(type->name == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME){
+    if(type->classId.name == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name){
       return readObject(type, caret, config);
-    } else if(type->name == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME){
+    } else if(type->classId.name == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name){
       return readListMap(type, caret, config);
     }
     return AbstractObjectWrapper::empty();

@@ -116,9 +116,9 @@ private:
                         const oatpp::data::mapping::type::AbstractObjectWrapper& polymorph,
                         const std::shared_ptr<Config>& config){
     auto type = polymorph.valueType;
-    if(type->name == oatpp::data::mapping::type::__class::AbstractObject::CLASS_NAME) {
+    if(type->classId.name == oatpp::data::mapping::type::__class::AbstractObject::CLASS_ID.name) {
       writeValue(stream, oatpp::data::mapping::type::static_wrapper_cast<Object>(polymorph), config);
-    } else if(type->name == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_NAME) {
+    } else if(type->classId.name == oatpp::data::mapping::type::__class::AbstractListMap::CLASS_ID.name) {
       writeValue(stream, oatpp::data::mapping::type::static_wrapper_cast<AbstractFieldsMap>(polymorph), config);
     } else {
       throw std::runtime_error("[oatpp::parser::json::mapping::DtoToMongo::serialize()]: Unknown parameter type");
